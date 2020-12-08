@@ -1,9 +1,27 @@
 [package]
 name = "person_rust_skeleton"
-version = "0.1.0"
+version = "0.0.1"
 authors = ["Michael Cummings <dragonrun1@gmail.com>"]
+description = "Skeleton for common person database tables in MySQL, PostgreSQL, and SQLite."
 edition = "2018"
+keywords = ["database", "diesel", "MySQL", "PostgreSQL", "SQLite"]
+categories = ["database", "database-implementations", "data-structures"]
+license = "Apache-2.0 OR MIT"
+homepage = "https://github.com/Dragonrun1/person_rust_skeleton"
+readme = "README.md"
+repository = "https://github.com/Dragonrun1/person_rust_skeleton"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+diesel = "1.4.5"
+dotenv = "0.15.0"
+thiserror = "1.0.22"
+
+[features]
+default = ["mysql"]
+mysql = ["diesel/mysql"]
+postgres = ["diesel/postgres"]
+sqlite = ["diesel/sqlite"]
+
+[patch.crates-io]
+#mysqlclient-sys = { git = "https://github.com/Janrupf/mysqlclient-sys", rev = "d85dd77" }
