@@ -35,7 +35,7 @@
 // SOFTWARE.
 
 use super::{
-    Error::{DieselConnection, MissingDbUrl, MissingEnvFile},
+    Error::{DieselConnection, MissingDbUrl},
     PRSResult,
 };
 use diesel::{Connection, MysqlConnection};
@@ -43,7 +43,8 @@ use std::env;
 
 #[allow(dead_code)]
 pub fn establish_connection() -> PRSResult<MysqlConnection> {
-    dotenv::dotenv().map_err(|_| MissingEnvFile)?;
+    // Use optional .env file values.
+    dotenv::dotenv().ok();
     let database_url = env::var("DATABASE_URL").map_err(|_| MissingDbUrl)?;
     Ok(MysqlConnection::establish(&database_url).map_err(DieselConnection)?)
 }

@@ -45,13 +45,10 @@ pub enum Error {
     #[error("Diesel oops")]
     DieselResult(#[from] diesel::result::Error),
     /// Used for any under-lying diesel errors.
-    #[error("Diesel oops")]
+    #[error("Diesel connection oops")]
     DieselConnection(#[from] diesel::result::ConnectionError),
     #[error("DATABASE_URL must be set")]
     MissingDbUrl,
-    /// Use when .env file can't be found.
-    #[error("Failed to find .env file")]
-    MissingEnvFile,
 }
 
 pub type PRSResult<T> = Result<T, Error>;
