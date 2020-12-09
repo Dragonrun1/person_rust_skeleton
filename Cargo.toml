@@ -14,14 +14,12 @@ repository = "https://github.com/Dragonrun1/person_rust_skeleton"
 
 [dependencies]
 diesel = "1.4.5"
+diesel_derives = "1.4.1"
 dotenv = "0.15.0"
 thiserror = "1.0.22"
 
 [features]
-default = ["mysql"]
-mysql = ["diesel/mysql"]
-postgres = ["diesel/postgres"]
-sqlite = ["diesel/sqlite"]
-
-[patch.crates-io]
-#mysqlclient-sys = { git = "https://github.com/Janrupf/mysqlclient-sys", rev = "d85dd77" }
+default = ["diesel/chrono", "mysql"]
+mysql = ["diesel/mysql", "diesel_derives/mysql"]
+postgres = ["diesel/postgres", "diesel_derives/postgres"]
+sqlite = ["diesel/sqlite", "diesel_derives/sqlite"]
