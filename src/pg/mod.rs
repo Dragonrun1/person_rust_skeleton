@@ -34,28 +34,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#[macro_use]
-extern crate diesel;
-extern crate diesel_derives;
-extern crate dotenv;
+use super::{
+    Error::{DieselConnection, MissingDbUrl, MissingEnvFile},
+    PRSResult,
+};
+use diesel::{Connection, PgConnection};
+use std::env;
 
-pub use crate::error::{Error, PRSResult};
-#[cfg(feature = "mysql")]
-pub use crate::mysql::*;
-#[cfg(feature = "postgres")]
-pub use crate::pg::*;
-pub use crate::schema::*;
-#[cfg(feature = "sqlite")]
-pub use crate::sqlite::*;
-
-mod error;
-#[cfg(feature = "mysql")]
-mod mysql;
-#[cfg(feature = "postgres")]
-mod pg;
-mod schema;
-#[cfg(feature = "sqlite")]
-mod sqlite;
+#[allow(dead_code)]
+pub fn establish_connection() -> PRSResult<PgConnection> {
+    dotenv::dotenv().map_err(|_| MissingEnvFile)?;
+    let database_url = env::var("DATABASE_URL").map_err(|_| MissingDbUrl)?;
+    Ok(PgConnection::establish(&database_url).map_err(DieselConnection)?)
+}
 
 #[cfg(test)]
 mod tests {

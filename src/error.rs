@@ -33,29 +33,28 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+//! A common set of error and result type used in the library.
 
-#[macro_use]
-extern crate diesel;
-extern crate diesel_derives;
-extern crate dotenv;
+use thiserror::Error;
 
-pub use crate::error::{Error, PRSResult};
-#[cfg(feature = "mysql")]
-pub use crate::mysql::*;
-#[cfg(feature = "postgres")]
-pub use crate::pg::*;
-pub use crate::schema::*;
-#[cfg(feature = "sqlite")]
-pub use crate::sqlite::*;
+/// Provides a shared set of error types.
+#[derive(Error, Debug)]
+#[non_exhaustive]
+pub enum Error {
+    /// Used for any under-lying diesel errors.
+    #[error("Diesel oops")]
+    DieselResult(#[from] diesel::result::Error),
+    /// Used for any under-lying diesel errors.
+    #[error("Diesel oops")]
+    DieselConnection(#[from] diesel::result::ConnectionError),
+    #[error("DATABASE_URL must be set")]
+    MissingDbUrl,
+    /// Use when .env file can't be found.
+    #[error("Failed to find .env file")]
+    MissingEnvFile,
+}
 
-mod error;
-#[cfg(feature = "mysql")]
-mod mysql;
-#[cfg(feature = "postgres")]
-mod pg;
-mod schema;
-#[cfg(feature = "sqlite")]
-mod sqlite;
+pub type PRSResult<T> = Result<T, Error>;
 
 #[cfg(test)]
 mod tests {
