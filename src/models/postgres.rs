@@ -1,4 +1,4 @@
-// Copyright © 2020-present, Michael Cummings
+// Copyright © 2021-present, Michael Cummings
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,21 +33,6 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-
-use super::{
-    Error::{DieselConnection, MissingDbUrl},
-    PRSResult,
-};
-use diesel::{Connection, PgConnection};
-use std::env;
-
-#[allow(dead_code)]
-pub fn establish_connection() -> PRSResult<PgConnection> {
-    // Use optional .env file values.
-    dotenv::dotenv().ok();
-    let database_url = env::var("DATABASE_URL").map_err(|_| MissingDbUrl)?;
-    Ok(PgConnection::establish(&database_url).map_err(DieselConnection)?)
-}
 
 #[cfg(test)]
 mod tests {

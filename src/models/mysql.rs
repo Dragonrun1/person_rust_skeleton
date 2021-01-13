@@ -1,4 +1,4 @@
-// Copyright © 2020-present, Michael Cummings
+// Copyright © 2021-present, Michael Cummings
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 //
 // MIT License
 //
-// Copyright © 2020-present, Michael Cummings <mgcummings@yahoo.com>.
+// Copyright © 2021-present, Michael Cummings <mgcummings@yahoo.com>.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -34,22 +34,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-use super::{
-    Error::{DieselConnection, MissingDbUrl},
-    PRSResult,
-};
-use diesel::{Connection, MysqlConnection};
-use std::env;
-
-#[allow(dead_code)]
-pub fn establish_connection() -> PRSResult<MysqlConnection> {
-    // Use optional .env file values.
-    dotenv::dotenv().ok();
-    let database_url = env::var("DATABASE_URL").map_err(|_| MissingDbUrl)?;
-    Ok(MysqlConnection::establish(&database_url).map_err(DieselConnection)?)
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-}
+// #[cfg(test)]
+// mod tests {
+//     use super::*;
+// }
