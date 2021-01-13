@@ -1,0 +1,32 @@
+# Must include the username, password, hostname, and (opt) database for MySQL or
+# Postgres.
+# Do NOT include the protocol: mysql:// or postres:// as that will be add
+# automatically in connect.
+# SQLite3 normally only needs a file name with optional path.
+# Example with optional database:
+url = "hacker1:secret@localhost/prs_demo"
+# Without database would require database value as well:
+#database = "prs_demo"
+#url = "hacker1:secret@localhost"
+
+# The database (schema) part of an url may optionally be give seperately from
+# the rest of the url in MySQL or Postgres.
+# DO NOT use if the url is already include a database value as that will cause
+# an error.
+# Also MySQL or Postgres connections will error if no database is give here,
+# as part of the url, or in their own override values as in examples below.
+# Sqlite connections ignore this value.
+#database = "prs_demo"
+
+## The above common values can be overridden by per driver values for each of
+## MySQL, Postgres, or Sqlite.
+
+# MySQL override database example.
+# Only valid if not already included in url.
+#mysql = { database = "mysql_demo" }
+
+# Postgres override example showing url and database overrides.
+#postres = { url = "new_hacker:I_know_the_secret@localhost", database = "prs_demo"}
+
+# Sqlite override example.
+#sqlite = { url = "prs_demo.sqlite" }
