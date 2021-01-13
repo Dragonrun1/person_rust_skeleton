@@ -23,8 +23,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -34,22 +34,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+use chrono::NaiveDateTime;
+use rand::rngs::ThreadRng;
+use serde::{Deserialize, Serialize};
+use uuid64rs::Uuid4;
+
+use crate::schema::people;
+
 #[cfg(feature = "mysql")]
 mod mysql;
 #[cfg(feature = "postgres")]
 mod postgres;
 #[cfg(feature = "sqlite")]
 mod sqlite;
-
-use crate::schema::people;
-use chrono::NaiveDateTime;
-use rand::rngs::ThreadRng;
-use serde::{Deserialize, Serialize};
-use uuid64rs::Uuid4;
 // Remember BREAD not CRUD!!!
 
 #[derive(
-    AsChangeset, Debug, Deserialize, Identifiable, Insertable, PartialEq, Queryable, Serialize,
+    Debug,
+    Deserialize,
+    PartialEq,
+    Serialize,
+    AsChangeset,
+    Identifiable,
+    Insertable,
+    Queryable,
 )]
 #[table_name = "people"]
 pub struct Person {
@@ -70,7 +78,9 @@ pub struct Person {
     pub updated_by: Uuid4,
 }
 
-#[derive(Debug, Deserialize, Identifiable, Insertable, PartialEq, Serialize)]
+#[derive(
+    Debug, Deserialize, Identifiable, Insertable, PartialEq, Serialize,
+)]
 #[table_name = "people"]
 pub struct AddPerson {
     id: Uuid4,
