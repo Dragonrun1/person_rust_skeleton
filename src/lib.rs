@@ -34,30 +34,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+extern crate chrono;
 #[macro_use]
 extern crate diesel;
+#[macro_use]
 extern crate diesel_derives;
-extern crate dotenv;
+// extern crate dotenv;
+// extern crate serde;
 
+#[cfg(feature = "mysql")]
+pub use crate::connections::mysql::*;
+#[cfg(feature = "postgres")]
+pub use crate::connections::pg::*;
+#[cfg(feature = "sqlite")]
+pub use crate::connections::sqlite::*;
 pub use crate::error::{Error, PRSResult};
-#[cfg(feature = "mysql")]
-pub use crate::mysql::*;
-#[cfg(feature = "postgres")]
-pub use crate::pg::*;
 pub use crate::schema::*;
-#[cfg(feature = "sqlite")]
-pub use crate::sqlite::*;
 
+mod config;
+mod connections;
 mod error;
-#[cfg(feature = "mysql")]
-mod mysql;
-#[cfg(feature = "postgres")]
-mod pg;
+mod models;
 mod schema;
-#[cfg(feature = "sqlite")]
-mod sqlite;
-
 #[cfg(test)]
-mod tests {
-    use super::*;
-}
+mod tests;

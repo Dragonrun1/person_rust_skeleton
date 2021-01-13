@@ -41,19 +41,20 @@ use thiserror::Error;
 #[derive(Error, Debug)]
 #[non_exhaustive]
 pub enum Error {
+    #[error(transparent)]
+    BadConfigFile(#[from] toml::de::Error),
+    #[error("Given connection configuration is missing required 'url' value")]
+    ConfigMissingUrl,
     /// Used for any under-lying diesel errors.
-    #[error("Diesel oops")]
-    DieselResult(#[from] diesel::result::Error),
-    /// Used for any under-lying diesel errors.
-    #[error("Diesel connection oops")]
+    #[error(transparent)]
     DieselConnection(#[from] diesel::result::ConnectionError),
-    #[error("DATABASE_URL must be set")]
-    MissingDbUrl,
+    /// Used for any under-lying diesel result errors.
+    #[error(transparent)]
+    DieselResult(#[from] diesel::result::Error),
+    #[error("No valid configuration was found")]
+    InvalidConfig,
+    #[error("Getting pwd failed")]
+    UnknownPWD,
 }
 
 pub type PRSResult<T> = Result<T, Error>;
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-}
