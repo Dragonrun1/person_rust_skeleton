@@ -72,15 +72,15 @@ CREATE TABLE people
 INSERT INTO genders
     (id, gender_identity, sex)
 VALUES
-    ('Aj_ZFxDQZMTZvy4VS4xPXW', 'female', 'male'),
-    ('BG2edTSZ9CDZIzQY5Q3Bmi', 'female', 'female'),
-    ('BuuaJbG8lBFJ1WMiyAM2GS', 'male', 'male'),
-    ('CWZiDGemBFha7Oy-XEyTUx', 'male', 'female'),
-    ('XNV_rXUFQvqQfvqJLSHP5w', NULL, 'female'),
-    ('sFJPpw75SSmFiF1wnfbZVg', NULL, 'male');
+    ('AAAAAAAAAAgABAAAAAAAAA', 'female', 'female'),
+    ('AAAAAAAAAAgABAAAAAAAAB', 'female', 'male'),
+    ('AAAAAAAAAAgABAAAAAAAAC', 'male', 'female'),
+    ('AAAAAAAAAAgABAAAAAAAAD', 'male', 'male'),
+    ('AAAAAAAAAAgABAAAAAAAAE', NULL, 'female'),
+    ('AAAAAAAAAAgABAAAAAAAAF', NULL, 'male');
 -- Pronouns
 INSERT INTO pronouns (id, object, possessive, subject)
 VALUES
-    ('B01Ij6SSS8OT5S0hoJdPcw', 'him', 'his', 'he'),
-    ('pjKF25EwT_G2bnof7b5yJQ', 'them', 'theirs', 'they'),
-    ('twPhMNLuTkG9HcZm59kyow', 'her', 'hers', 'she');
+    ('AAAAAAAAAAgABAAAAAAAAA', 'her', 'hers', 'she'),
+    ('AAAAAAAAAAgABAAAAAAAAB', 'him', 'his', 'he'),
+    ('AAAAAAAAAAgABAAAAAAAAC', 'them', 'theirs', 'they');
