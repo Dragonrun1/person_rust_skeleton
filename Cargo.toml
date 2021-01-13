@@ -1,6 +1,6 @@
 [package]
 name = "person_rust_skeleton"
-version = "0.0.1"
+version = "0.0.3"
 authors = ["Michael Cummings <dragonrun1@gmail.com>"]
 description = "Skeleton for common person database tables in MySQL, PostgreSQL, and SQLite."
 edition = "2018"
@@ -17,9 +17,15 @@ diesel = "1.4.5"
 diesel_derives = "1.4.1"
 dotenv = "0.15.0"
 thiserror = "1.0.22"
+toml = "0.5.7"
+uuid64rs = { version = "0.0.11", path = "../Uuid64rs" }
 
 [features]
-default = ["diesel/chrono", "mysql"]
+created_at = []
+default = ["diesel/chrono", "diesel/serde_json", "mysql", "updated_by"]
 mysql = ["diesel/mysql", "diesel_derives/mysql"]
 postgres = ["diesel/postgres", "diesel_derives/postgres"]
 sqlite = ["diesel/sqlite", "diesel_derives/sqlite"]
+updated_at = ["created_at"]
+updated_by = ["created_at", "updated_at"]
+
