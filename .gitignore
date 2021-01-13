@@ -1,5 +1,7 @@
 .idea/
 target/
 .env
-junk*.*
 Cargo.lock
+junk*.*
+prs.toml
+.prs.toml
