@@ -34,22 +34,32 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-use super::{
-    Error::{DieselConnection, MissingDbUrl},
+use crate::{
+    config::Config,
+    connections::find_config,
+    error::Error::{ConfigMissingUrl, DieselConnection},
     PRSResult,
 };
-use diesel::{Connection, SqliteConnection};
-use std::env;
+use diesel::{Connection, MysqlConnection};
 
 #[allow(dead_code)]
-pub fn establish_connection() -> PRSResult<SqliteConnection> {
-    // Use optional .env file values.
-    dotenv::dotenv().ok();
-    let database_url = env::var("DATABASE_URL").map_err(|_| MissingDbUrl)?;
-    Ok(SqliteConnection::establish(&database_url).map_err(DieselConnection)?)
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
+pub fn establish_connection<T>(config: T) -> PRSResult<MysqlConnection>
+where
+    T: Into<Option<Config>>,
+{
+    let config = find_config(config)?;
+    let url = match &config.mysql {
+        Some(opt) => opt.url.clone(),
+        None => config.url.clone(),
+    }
+    .ok_or(ConfigMissingUrl)?;
+    let database = match config.mysql {
+        Some(opt) => opt.database,
+        None => config.database,
+    };
+    let url = match database {
+        Some(db) => format!("mysql://{}/{}", url, db),
+        None => format!("mysql://{}", url),
+    };
+    Ok(MysqlConnection::establish(url.as_str()).map_err(DieselConnection)?)
 }
