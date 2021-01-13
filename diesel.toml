@@ -2,5 +2,6 @@
 # see diesel.rs/guides/configuring-diesel-cli
 
 [print_schema]
-file = "src/schema/mod.rs"
-with_docs = true
+#file = "src/schema/mod.rs"
+import_types = ["diesel::sql_types::*", "uuid64rs::Uuid4Proxy"]
+with_docs = false
